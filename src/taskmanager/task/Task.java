@@ -1,10 +1,12 @@
+package taskmanager.task;
+
 import java.util.Objects;
 
 public class Task {
-    private String name;
-    private String description;
-    private int id;
-    private Status status;
+    protected String name;
+    protected String description;
+    protected int id;
+    protected Status status;
 
     public Task(String name, String description) {
         this.name = name;
@@ -59,7 +61,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "taskmanager.task.Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
