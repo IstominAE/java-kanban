@@ -20,6 +20,10 @@ public class Epic extends Task {
     }
 
     public void addSubtask(int subtaskId) {
+        if(subtaskId == id) {
+            System.out.println("Нельзя добавлять в Epic самого себя в качестве подзадачи");
+            return;
+        }
         subtasks.add(subtaskId);
     }
 

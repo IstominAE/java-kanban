@@ -1,15 +1,18 @@
+import taskmanager.manager.InMemoryTaskManager;
 import taskmanager.manager.TaskManager;
 import taskmanager.task.Epic;
 import taskmanager.task.Status;
 import taskmanager.task.Subtask;
 import taskmanager.task.Task;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Поехали!");
 
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = new InMemoryTaskManager();
 
         Task myTask = new Task("Покормить собаку.", "С выполнением команд.");
         myTask = taskManager.addTask(myTask);
@@ -36,13 +39,6 @@ public class Main {
 
         System.out.println("Все задачи:");
         System.out.println(taskManager.getAllTasks());
-        taskManager.removeTaskById(myTask.getId());
-        System.out.println("Удалил первую:");
-        System.out.println(taskManager.getAllTasks());
-        taskManager.clearAllTasks();
-        System.out.println("Удалил все:");
-        System.out.println(taskManager.getAllTasks());
-
 
         Epic catFind = new Epic("Найти кошку.", "Нужно успеть за час.");
         taskManager.addEpic(catFind);
@@ -63,14 +59,6 @@ public class Main {
         taskManager.updateSubtask(findCatInLivingRoom);
         System.out.println(catFind);
         System.out.println(taskManager.getSubtasksByEpic(catFind.getId()));
-        taskManager.removeSubtaskById(findCatInKitchen.getId());
-        System.out.println("Удалил подзадачу \"Поискать на кухне\":");
-        System.out.println(catFind);
-        System.out.println(taskManager.getSubtasksByEpic(catFind.getId()));
-        taskManager.clearAllSubtasks();
-        System.out.println("Удалил все подзадачи:");
-        System.out.println(taskManager.getAllSubtasks());
-        taskManager.clearAllEpics();
 
         Epic epic1 = new Epic("Прогулка", "Нужно успеть за час.");
         taskManager.addEpic(epic1);
@@ -78,14 +66,17 @@ public class Main {
         taskManager.addEpic(epic2);
         Epic epic3 = new Epic("Готовка", "Нужно успеть за час.");
         taskManager.addEpic(epic3);
-
         System.out.println("Все эпики:");
         System.out.println(taskManager.getAllEpics());
-        taskManager.removeEpicById(epic1.getId());
-        System.out.println("Удалил первый:");
-        System.out.println(taskManager.getAllEpics());
-        taskManager.clearAllEpics();
-        System.out.println("Удалил все:");
-        System.out.println(taskManager.getAllEpics());
+
+        Task taskForHistory1 = taskManager.getTaskById(myTask.getId());
+        Task taskForHistory2 = taskManager.getTaskById(myTask2.getId());
+        Task taskForHistory3 = taskManager.getTaskById(myTask3.getId());
+        Epic epicForHistory1 = taskManager.getEpicById(catFind.getId());
+        Subtask subtaskForHistory1 = taskManager.getSubtaskById(findCatInKitchen.getId());
+        Subtask subtaskForHistory2 = taskManager.getSubtaskById(findCatInLivingRoom.getId());
+        List<Task> history = taskManager.getHistory();
+        System.out.println("History: " + history);
+
     }
 }
